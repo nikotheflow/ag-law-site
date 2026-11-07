@@ -4,9 +4,13 @@ const path = Astro.url.pathname;
 ---
 <header class="site-header">
   <div class="container bar">
-    <a class="logo" href="/" aria-label={`${site.brand} — на главную`}>
-      <span class="logo-name">{site.brand}</span>
-      <span class="logo-sub">{site.person.shortName} · юрист в Абакане</span>
+    <a class="logo" href="/" aria-label={`${site.brand}, на главную`}>
+      <span class="logo-ag" aria-hidden="true">{site.brandShort}</span>
+      <span class="logo-bar" aria-hidden="true"></span>
+      <span class="logo-text">
+        <span class="logo-name">юридическая студия</span>
+        <span class="logo-sub">{site.person.shortName} · Абакан</span>
+      </span>
     </a>
 
     <nav class="nav" aria-label="Основное меню">
@@ -16,6 +20,7 @@ const path = Astro.url.pathname;
           {services.map((s) => (
             <li><a href={s.href} aria-current={path === s.href ? 'page' : undefined}>{s.label}</a></li>
           ))}
+          <li><a href="/uslugi/">Все услуги</a></li>
         </ul>
       </details>
       {nav.map((n) => (
@@ -28,7 +33,17 @@ const path = Astro.url.pathname;
       <span class="msgr">
         <a href={site.messengers.telegram} rel="noopener">Telegram</a>
         <a href={site.messengers.whatsapp} rel="noopener">WhatsApp</a>
+        <span>24/7</span>
       </span>
     </div>
   </div>
 </header>
+
+<script>
+  // Закрывать меню «Услуги» кликом мимо и по Esc
+  const d = document.querySelector<HTMLDetailsElement>('details.services');
+  if (d) {
+    document.addEventListener('click', (e) => { if (d.open && !d.contains(e.target as Node)) d.open = false; });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') d.open = false; });
+  }
+</script>

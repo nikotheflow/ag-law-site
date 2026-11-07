@@ -11,6 +11,7 @@
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.6",
     "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/golos-text": "^5.3.0",
     "astro": "^7.4.7"
   }
 }

@@ -6,15 +6,19 @@ const year = new Date().getFullYear();
   <div class="container cols">
     <div>
       <p class="f-title">{site.brand}</p>
-      <p>{site.address.city}, {site.address.street}, приём по записи</p>
+      <p>{site.person.shortName}, юрист</p>
+      <p>{site.address.city}, {site.address.street}, 1 этаж</p>
+      <p>Приём по записи · на связи {site.hours.toLowerCase()}</p>
+    </div>
+    <div>
+      <p class="f-title">Связаться</p>
       <p><a href={`tel:${site.phoneHref}`}>{site.phone}</a> · звонки, MAX</p>
       <p><a href={`tel:${site.phoneMessengersHref}`}>{site.phoneMessengers}</a> · Telegram, WhatsApp</p>
       <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
-      {site.hours && <p>{site.hours}</p>}
     </div>
     <div>
-      <p class="f-title">Услуги</p>
-      <ul>{services.map((s) => <li><a href={s.href}>{s.label}</a></li>)}</ul>
+      <p class="f-title">Направления</p>
+      <ul>{services.filter((s) => s.main).map((s) => <li><a href={s.href}>{s.label}</a></li>)}<li><a href="/uslugi/">Все услуги</a></li></ul>
     </div>
     <div>
       <p class="f-title">Сайт</p>
@@ -26,6 +30,6 @@ const year = new Date().getFullYear();
   </div>
   <div class="container legal">
     <p>{site.legal.entity} · ОГРНИП {site.legal.ogrnip}{site.legal.inn && ` · ИНН ${site.legal.inn}`}</p>
-    <p>Информация на сайте не является публичной офертой. © {year}</p>
+    <p>Информация на сайте не является публичной офертой · © {year}</p>
   </div>
 </footer>

@@ -3,8 +3,8 @@
 
 export const site = {
   url: 'https://aglawstudio.ru', // [УТОЧНИТЬ: домен не куплен]
-  brand: 'АГ | юридическая студия',
-  brandShort: 'АГ',
+  brand: 'AG | юридическая студия', // латинские AG — как в логотипе
+  brandShort: 'AG',
   brandSub: 'юридическая студия · Абакан',
   person: {
     name: 'Гришанин Александр Юрьевич',
@@ -53,18 +53,29 @@ export const site = {
   },
 };
 
-// Меню. Порядок = порядок в шапке и подвале. Сначала направления Саши для бизнеса.
+// Меню и карточки направлений. Порядок = порядок в шапке, подвале и на главной.
+// main: true — пять главных направлений Саши, на главной выделены.
 export const services = [
-  { href: '/uslugi/arbitrazh/', label: 'Арбитражные споры' },
-  { href: '/uslugi/biznes/', label: 'Абонентское сопровождение бизнеса' },
-  { href: '/uslugi/stroitelnye-spory/', label: 'Строительные споры' },
-  { href: '/uslugi/tehprisoedinenie/', label: 'Техприсоединение' },
-  { href: '/uslugi/medicina/', label: 'Споры с медорганизациями, защита репутации' },
-  { href: '/uslugi/nedvizhimost/', label: 'Недвижимость и земля' },
-  { href: '/uslugi/dogovory/', label: 'Договоры' },
-  { href: '/uslugi/vzyskanie-dolgov/', label: 'Взыскание долгов' },
-  { href: '/uslugi/pretenzii-i-iski/', label: 'Претензии и иски' },
-  { href: '/uslugi/gosorgany/', label: 'Прокуратура и госорганы' },
+  { href: '/uslugi/arbitrazh/', label: 'Арбитражные споры', main: true,
+    blurb: 'Взыскание задолженности, поставка, подряд, неустойка и убытки в Арбитражном суде Хакасии и апелляции.' },
+  { href: '/uslugi/biznes/', label: 'Абонентское сопровождение бизнеса', main: true,
+    blurb: 'Юрист на связи вместо штатного: договоры, претензии, проверки, суды. Для ИП и ООО.' },
+  { href: '/uslugi/stroitelnye-spory/', label: 'Строительные споры', main: true,
+    blurb: 'Сорванные сроки, брак, аванс, оплата работ. Для заказчиков и подрядчиков.' },
+  { href: '/uslugi/tehprisoedinenie/', label: 'Техприсоединение', main: true,
+    blurb: 'Россети не подключают по договору? Подключение через суд, неустойка и астрент.' },
+  { href: '/uslugi/medicina/', label: 'Медицина и защита репутации', main: true,
+    blurb: 'Споры с клиниками, возврат денег за лечение, честь, достоинство и деловая репутация.' },
+  { href: '/uslugi/nedvizhimost/', label: 'Недвижимость и земля', main: false,
+    blurb: 'Проверка перед покупкой, сопровождение сделок, земельные споры.' },
+  { href: '/uslugi/dogovory/', label: 'Договоры', main: false,
+    blurb: 'Составление и проверка: поставка, подряд, услуги, аренда.' },
+  { href: '/uslugi/vzyskanie-dolgov/', label: 'Взыскание долгов', main: false,
+    blurb: 'Претензия, судебный приказ, иск, работа с приставами.' },
+  { href: '/uslugi/pretenzii-i-iski/', label: 'Претензии и иски', main: false,
+    blurb: 'Составлю документ под вашу ситуацию, а не по шаблону.' },
+  { href: '/uslugi/gosorgany/', label: 'Прокуратура и госорганы', main: false,
+    blurb: 'Представления прокурора, проверки, штрафы, жалобы.' },
 ];
 
 export const nav = [

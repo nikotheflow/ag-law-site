@@ -1,27 +1,26 @@
 ---
-// Каталог услуг: собирается из страниц с адресом /uslugi/…
-import { getCollection } from 'astro:content';
+// Каталог услуг: порядок и короткие описания берутся из src/data/site.ts
 import Base from '../../layouts/Base.astro';
-
-const services = (await getCollection('pages'))
-  .filter((p) => p.data.slug.startsWith('/uslugi/') && !p.data.draft)
-  .sort((a, b) => a.data.h1.localeCompare(b.data.h1, 'ru'));
+import { services } from '../../data/site';
+const main = services.filter((s) => s.main);
+const other = services.filter((s) => !s.main);
 ---
 <Base
-  title="Услуги юриста в Абакане — список и цены | Александр Гришанин"
-  description="Юридические услуги в Абакане: техприсоединение, договоры, взыскание долгов, претензии и иски, строительные споры, сопровождение бизнеса, жалобы в прокуратуру."
+  title="Услуги юриста в Абакане — арбитраж, стройка, техприсоединение | AG юридическая студия"
+  description="Юридические услуги в Абакане: арбитражные споры, абонентское сопровождение бизнеса, строительные споры, техприсоединение, медицина и репутация, недвижимость, договоры, взыскание долгов."
   path="/uslugi/"
   crumbs={[{ name: 'Услуги', path: '/uslugi/' }]}
 >
   <section class="container prose">
     <h1>Услуги юриста в Абакане</h1>
+    <p>Работаю прежде всего с бизнесом, но берусь и за дела частных лиц по этим направлениям. Уголовные дела и банкротство не веду.</p>
+    <h2>Основные направления</h2>
     <ul class="cards">
-      {services.map((s) => (
-        <li class="card">
-          <a href={s.data.slug}><strong>{s.data.h1}</strong></a>
-          <p>{s.data.description}</p>
-        </li>
-      ))}
+      {main.map((s) => <li class="card"><a href={s.href}>{s.label}</a><p>{s.blurb}</p></li>)}
+    </ul>
+    <h2>Также</h2>
+    <ul class="cards">
+      {other.map((s) => <li class="card"><a href={s.href}>{s.label}</a><p>{s.blurb}</p></li>)}
     </ul>
   </section>
 </Base>

@@ -40,6 +40,7 @@ const canonical = new URL(path, site.url).href;
     <!-- [ФОТО] og:image 1200×630 — добавить, когда будет фото Саши -->
 
     <Schema path={path} title={title} crumbs={crumbs} />
+    <slot name="head" />
     <!-- Яндекс Метрика и верификация Вебмастера — добавить при запуске -->
   </head>
   <body>

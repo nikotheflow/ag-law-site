@@ -1,15 +1,18 @@
 ---
 // Все страницы из content/pages собираются по полю slug из их frontmatter.
+// Главная — отдельная страница src/pages/index.astro.
 import { getCollection, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import { extractFaq } from '../lib/faq';
 
 export async function getStaticPaths() {
   const pages = await getCollection('pages');
-  return pages.map((page) => ({
-    // '/' → undefined (главная), '/uslugi/biznes/' → 'uslugi/biznes'
-    params: { slug: page.data.slug === '/' ? undefined : page.data.slug.replace(/^\/|\/$/g, '') },
-    props: { page },
-  }));
+  return pages
+    .filter((page) => page.data.slug !== '/')
+    .map((page) => ({
+      params: { slug: page.data.slug.replace(/^\/|\/$/g, '') },
+      props: { page },
+    }));
 }
 
 const { page } = Astro.props;
@@ -18,12 +21,19 @@ const { title, description, slug, draft, form, cta_title, cta_text } = page.data
 
 // Хлебные крошки: для услуг — «Услуги › Название», для остальных — просто название.
 const short = page.data.h1.split(':')[0];
-const crumbs =
-  slug === '/'
-    ? []
-    : slug.startsWith('/uslugi/')
-      ? [{ name: 'Услуги', path: '/uslugi/' }, { name: short, path: slug }]
-      : [{ name: short, path: slug }];
+const crumbs = slug.startsWith('/uslugi/')
+  ? [{ name: 'Услуги', path: '/uslugi/' }, { name: short, path: slug }]
+  : [{ name: short, path: slug }];
+
+// Микроразметка вопросов-ответов из раздела «Частые вопросы»
+const faq = draft ? [] : extractFaq(page.body);
+const faqLd = faq.length
+  ? JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    })
+  : '';
 ---
 <Base
   title={title}
@@ -35,7 +45,8 @@ const crumbs =
   ctaText={cta_text}
   crumbs={crumbs}
 >
-  <article class={`container prose ${slug === '/' ? 'home' : ''}`}>
+  {faqLd && <script type="application/ld+json" set:html={faqLd} slot="head" />}
+  <article class="container prose">
     <Content />
   </article>
 </Base>
