@@ -6,7 +6,7 @@ import { rehypeTodoMarks } from './scripts/rehype-todo-marks.mjs';
 const DRAFT_PATHS = ['/uslugi/vozmeshchenie-ushcherba/', '/uslugi/zhkh/', '/uslugi/potrebiteli/', '/keysy/', '/otzyvy/', '/blog/'];
 
 export default defineConfig({
-  site: 'https://grishanin-law.ru', // [УТОЧНИТЬ: домен] — держать в sync с src/data/site.ts
+  site: 'https://aglawstudio.ru', // [УТОЧНИТЬ: домен] — держать в sync с src/data/site.ts
   trailingSlash: 'always',
   build: { format: 'directory' },
   integrations: [

@@ -6,8 +6,9 @@ const year = new Date().getFullYear();
   <div class="container cols">
     <div>
       <p class="f-title">{site.brand}</p>
-      <p>{site.address.city}, {site.address.street}</p>
-      <p><a href={`tel:${site.phoneHref}`}>{site.phone}</a></p>
+      <p>{site.address.city}, {site.address.street}, приём по записи</p>
+      <p><a href={`tel:${site.phoneHref}`}>{site.phone}</a> · звонки, MAX</p>
+      <p><a href={`tel:${site.phoneMessengersHref}`}>{site.phoneMessengers}</a> · Telegram, WhatsApp</p>
       <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
       {site.hours && <p>{site.hours}</p>}
     </div>

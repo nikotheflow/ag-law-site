@@ -4,9 +4,9 @@ const path = Astro.url.pathname;
 ---
 <header class="site-header">
   <div class="container bar">
-    <a class="logo" href="/">
-      <span class="logo-name">{site.person.shortName}</span>
-      <span class="logo-sub">юрист в Абакане</span>
+    <a class="logo" href="/" aria-label={`${site.brand} — на главную`}>
+      <span class="logo-name">{site.brand}</span>
+      <span class="logo-sub">{site.person.shortName} · юрист в Абакане</span>
     </a>
 
     <nav class="nav" aria-label="Основное меню">
@@ -23,6 +23,12 @@ const path = Astro.url.pathname;
       ))}
     </nav>
 
-    <a class="phone" href={`tel:${site.phoneHref}`}>{site.phone}</a>
+    <div class="contacts">
+      <a class="phone" href={`tel:${site.phoneHref}`}>{site.phone}</a>
+      <span class="msgr">
+        <a href={site.messengers.telegram} rel="noopener">Telegram</a>
+        <a href={site.messengers.whatsapp} rel="noopener">WhatsApp</a>
+      </span>
+    </div>
   </div>
 </header>

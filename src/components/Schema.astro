@@ -28,9 +28,16 @@ const graph: Record<string, unknown>[] = [
     '@id': orgId,
     name: site.brand,
     url: `${site.url}/`,
-    telephone: site.phoneHref,
+    telephone: [site.phoneHref, site.phoneMessengersHref],
     email: site.email,
     address,
+    openingHoursSpecification: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: '00:00',
+      closes: '23:59',
+    },
+    ...(site.legal.inn ? { taxID: site.legal.inn } : {}),
     ...(site.address.lat && site.address.lon
       ? { geo: { '@type': 'GeoCoordinates', latitude: site.address.lat, longitude: site.address.lon } }
       : {}),
