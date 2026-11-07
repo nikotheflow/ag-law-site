@@ -13,7 +13,7 @@ const pages = defineCollection({
     queries: z.array(z.string()).default([]),
     // draft: страница собирается, но закрыта от индексации и не попадает в sitemap
     draft: z.boolean().default(false),
-    // показывать ли блок «Расскажите о ситуации» с формой внизу
+    // показывать ли блок связи (кнопки звонка и мессенджеров) внизу страницы
     form: z.boolean().default(true),
     // заголовок и подводка блока заявки внизу страницы
     cta_title: z.string().optional(),

@@ -3,7 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Schema from '../components/Schema.astro';
-import ContactForm from '../components/ContactForm.astro';
+import ContactCta from '../components/ContactCta.astro';
 import { site } from '../data/site';
 
 interface Props {
@@ -59,7 +59,7 @@ const canonical = new URL(path, site.url).href;
       )}
       <slot />
     </main>
-    {form && <ContactForm title={ctaTitle} text={ctaText || undefined} />}
+    {form && <ContactCta title={ctaTitle} text={ctaText || undefined} />}
     <Footer />
   </body>
 </html>

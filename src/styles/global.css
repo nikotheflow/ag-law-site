@@ -72,15 +72,9 @@ mark.todo { background: var(--todo); color: var(--todo-ink); padding: 1px 4px; b
 .cta { background: var(--surface); border-top: 1px solid var(--line); padding-block: 40px; }
 .cta h2 { margin: 0 0 8px; }
 .cta-links { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 8px; }
-.cta-note { color: var(--muted); font-size: 14px; margin: 0 0 24px; }
+.cta-note { color: var(--muted); font-size: 14px; margin: 0; }
 .btn { display: inline-block; background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent); padding: 10px 18px; border-radius: 8px; text-decoration: none; font: 600 16px var(--font); cursor: pointer; }
 .btn.ghost { background: transparent; color: var(--accent); }
-.form { display: grid; gap: 14px; max-width: 520px; }
-.form label { display: grid; gap: 4px; font-size: 15px; }
-.form input:not([type="checkbox"]), .form textarea { font: inherit; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); }
-.form .check { grid-template-columns: auto 1fr; align-items: start; gap: 8px; }
-.form .opt { color: var(--muted); }
-.form-status { margin: 0; color: var(--muted); }
 
 /* Подвал */
 .site-footer { background: var(--ink); color: #c9d1dc; padding-block: 36px 24px; font-size: 15px; }
