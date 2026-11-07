@@ -1,6 +1,8 @@
 ---
 import { site, services, nav } from '../data/site';
-const path = Astro.url.pathname;
+// текущий адрес без base (на GitHub Pages сайт живёт в подпапке)
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const path = Astro.url.pathname.slice(base.length) || '/';
 ---
 <header class="site-header">
   <div class="container bar">
