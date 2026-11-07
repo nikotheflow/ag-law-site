@@ -1,0 +1,28 @@
+---
+import { site, services, nav } from '../data/site';
+const path = Astro.url.pathname;
+---
+<header class="site-header">
+  <div class="container bar">
+    <a class="logo" href="/">
+      <span class="logo-name">{site.person.shortName}</span>
+      <span class="logo-sub">юрист в Абакане</span>
+    </a>
+
+    <nav class="nav" aria-label="Основное меню">
+      <details class="services">
+        <summary>Услуги</summary>
+        <ul>
+          {services.map((s) => (
+            <li><a href={s.href} aria-current={path === s.href ? 'page' : undefined}>{s.label}</a></li>
+          ))}
+        </ul>
+      </details>
+      {nav.map((n) => (
+        <a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a>
+      ))}
+    </nav>
+
+    <a class="phone" href={`tel:${site.phoneHref}`}>{site.phone}</a>
+  </div>
+</header>

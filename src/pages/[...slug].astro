@@ -1,0 +1,41 @@
+---
+// Все страницы из content/pages собираются по полю slug из их frontmatter.
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages.map((page) => ({
+    // '/' → undefined (главная), '/uslugi/biznes/' → 'uslugi/biznes'
+    params: { slug: page.data.slug === '/' ? undefined : page.data.slug.replace(/^\/|\/$/g, '') },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+const { title, description, slug, draft, form, cta_title, cta_text } = page.data;
+
+// Хлебные крошки: для услуг — «Услуги › Название», для остальных — просто название.
+const short = page.data.h1.split(':')[0];
+const crumbs =
+  slug === '/'
+    ? []
+    : slug.startsWith('/uslugi/')
+      ? [{ name: 'Услуги', path: '/uslugi/' }, { name: short, path: slug }]
+      : [{ name: short, path: slug }];
+---
+<Base
+  title={title}
+  description={description}
+  path={slug}
+  noindex={draft}
+  form={form}
+  ctaTitle={cta_title}
+  ctaText={cta_text}
+  crumbs={crumbs}
+>
+  <article class={`container prose ${slug === '/' ? 'home' : ''}`}>
+    <Content />
+  </article>
+</Base>

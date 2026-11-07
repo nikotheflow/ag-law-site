@@ -1,0 +1,68 @@
+---
+// Микроразметка schema.org: организация (LegalService) + юрист (Person) на всех страницах,
+// хлебные крошки на внутренних.
+import { site } from '../data/site';
+
+interface Props {
+  path: string;
+  title: string;
+  crumbs?: { name: string; path: string }[];
+}
+const { path, crumbs = [] } = Astro.props;
+
+const personId = `${site.url}/o-yuriste/#person`;
+const orgId = `${site.url}/#org`;
+
+const address = {
+  '@type': 'PostalAddress',
+  streetAddress: site.address.street,
+  addressLocality: site.address.city,
+  addressRegion: site.address.region,
+  addressCountry: site.address.country,
+  ...(site.address.postalCode ? { postalCode: site.address.postalCode } : {}),
+};
+
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': 'LegalService',
+    '@id': orgId,
+    name: site.brand,
+    url: `${site.url}/`,
+    telephone: site.phoneHref,
+    email: site.email,
+    address,
+    ...(site.address.lat && site.address.lon
+      ? { geo: { '@type': 'GeoCoordinates', latitude: site.address.lat, longitude: site.address.lon } }
+      : {}),
+    areaServed: site.areaServed.map((name) => ({ '@type': 'Place', name })),
+    priceRange: site.priceRange,
+    founder: { '@id': personId },
+    sameAs: Object.values(site.social),
+  },
+  {
+    '@type': 'Person',
+    '@id': personId,
+    name: site.person.name,
+    jobTitle: site.person.jobTitle,
+    alumniOf: { '@type': 'CollegeOrUniversity', name: site.person.alumniOf },
+    worksFor: { '@id': orgId },
+    address,
+    url: `${site.url}/o-yuriste/`,
+  },
+];
+
+if (path !== '/' && crumbs.length) {
+  graph.push({
+    '@type': 'BreadcrumbList',
+    itemListElement: [{ name: 'Главная', path: '/' }, ...crumbs].map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      item: `${site.url}${c.path}`,
+    })),
+  });
+}
+
+const json = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+---
+<script type="application/ld+json" set:html={json} />

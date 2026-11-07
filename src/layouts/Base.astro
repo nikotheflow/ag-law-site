@@ -1,0 +1,65 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Schema from '../components/Schema.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  noindex?: boolean;
+  form?: boolean;
+  ctaTitle?: string;
+  ctaText?: string;
+  crumbs?: { name: string; path: string }[];
+}
+const { title, description, path, noindex = false, form = true, ctaTitle, ctaText, crumbs = [] } = Astro.props;
+const canonical = new URL(path, site.url).href;
+---
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:site_name" content={site.brand} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <!-- [ФОТО] og:image 1200×630 — добавить, когда будет фото Саши -->
+
+    <Schema path={path} title={title} crumbs={crumbs} />
+    <!-- Яндекс Метрика и верификация Вебмастера — добавить при запуске -->
+  </head>
+  <body>
+    <a class="skip" href="#main">К содержанию</a>
+    <Header />
+    <main id="main">
+      {crumbs.length > 0 && (
+        <nav class="container crumbs" aria-label="Хлебные крошки">
+          <a href="/">Главная</a>
+          {crumbs.map((c, i) => (
+            <>
+              <span aria-hidden="true">›</span>
+              {i === crumbs.length - 1 ? <span aria-current="page">{c.name}</span> : <a href={c.path}>{c.name}</a>}
+            </>
+          ))}
+        </nav>
+      )}
+      <slot />
+    </main>
+    {form && <ContactForm title={ctaTitle} text={ctaText || undefined} />}
+    <Footer />
+  </body>
+</html>

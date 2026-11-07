@@ -1,0 +1,27 @@
+---
+// Каталог услуг: собирается из страниц с адресом /uslugi/…
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const services = (await getCollection('pages'))
+  .filter((p) => p.data.slug.startsWith('/uslugi/') && !p.data.draft)
+  .sort((a, b) => a.data.h1.localeCompare(b.data.h1, 'ru'));
+---
+<Base
+  title="Услуги юриста в Абакане — список и цены | Александр Гришанин"
+  description="Юридические услуги в Абакане: техприсоединение, договоры, взыскание долгов, претензии и иски, строительные споры, сопровождение бизнеса, жалобы в прокуратуру."
+  path="/uslugi/"
+  crumbs={[{ name: 'Услуги', path: '/uslugi/' }]}
+>
+  <section class="container prose">
+    <h1>Услуги юриста в Абакане</h1>
+    <ul class="cards">
+      {services.map((s) => (
+        <li class="card">
+          <a href={s.data.slug}><strong>{s.data.h1}</strong></a>
+          <p>{s.data.description}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
